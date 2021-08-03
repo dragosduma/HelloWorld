@@ -1,4 +1,6 @@
-﻿@{
+﻿@model TeamInfo
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,12 +11,13 @@
 <div class="text-center">
     <h1 class="display-4">Our Team</h1>
     <ul id="teamMembers">
-        <li>Teona</li>
-        <li>Claudia</li>
-        <li>Leon</li>
-        <li>George</li>
-        <li>Radu</li>
-        <li>Dragos</li>
+        @for (var i = 0; i < Model.TeamMembers.Count; i++)
+        {
+            var member = Model.TeamMembers[i];
+            <li class="member">
+                @member
+            </li>
+        }
     </ul>
     <input type="text" id="nameField" title="e.g Radu" />
     <button id="createButton" title="Create">Create</button>
