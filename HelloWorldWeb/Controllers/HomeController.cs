@@ -1,4 +1,8 @@
-﻿using HelloWorldWeb.Models;
+﻿// <copyright file="HomeController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using HelloWorldWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,9 +27,19 @@ namespace HelloWorldWeb.Controllers
                 Name = "Team 3",
                 TeamMembers = new List<string>(new string[] { "Radu", "Teona", "Claudia", "Dragos", "Leon", "George" })
             };
-
         }
 
+        [HttpGet]
+        public void AddTeamMember(string name)
+        {
+            teamInfo.TeamMembers.Add(name);
+        }
+
+        [HttpGet]
+        public int GetCount()
+        {
+            return teamInfo.TeamMembers.Count;
+        }
         public IActionResult Index()
         {
             return View(teamInfo);
