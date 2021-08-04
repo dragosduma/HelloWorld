@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using HelloWorldWeb.Models;
+using HelloWorldWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -16,33 +17,29 @@ namespace HelloWorldWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
-        private readonly TeamInfo teamInfo;
+        private readonly ITeamService teamService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ITeamService teamService)
         {
             this.logger = logger;
-            this.teamInfo = new TeamInfo
-            {
-                Name = "Team 3",
-                TeamMembers = new List<string>(new string[] { "Radu", "Teona", "Claudia", "Dragos", "Leon", "George" }),
-            };
+            this.teamService = teamService;
         }
 
         [HttpPost]
         public void AddTeamMember(string name)
         {
-            this.teamInfo.TeamMembers.Add(name);
+            this.teamService.AddTeamMember(name);
         }
 
         [HttpGet]
         public int GetCount()
         {
-            return this.teamInfo.TeamMembers.Count;
+            return this.teamService.GetTeamInfo().TeamMembers.Count;
         }
 
         public IActionResult Index()
         {
-            return this.View(this.teamInfo);
+            return this.View(this.teamService.GetTeamInfo());
         }
 
         public IActionResult Privacy()
