@@ -4,7 +4,7 @@ $(document).ready(function () {
         var newcomerName = $("#nameField").val();
       
         $.ajax({
-            url: "https://localhost:44313/Home/AddTeamMember",
+            url: "/Home/AddTeamMember",
             method: "POST",
             data: {
                 "name": newcomerName
