@@ -6,6 +6,8 @@ namespace HelloWorldWeb.Services
     {
         void AddTeamMember(string name);
 
+        public void RemoveMember(int memberIndex);
+
         TeamInfo GetTeamInfo();
     }
 }
