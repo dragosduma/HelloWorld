@@ -17,10 +17,10 @@
     <ul id="teamMembers">
         @for (var i = 0; i < Model.TeamMembers.Count; i++)
         {
-            var member = Model.TeamMembers[i];
+            var member = Model.TeamMembers[i].Name;
             <li class="member">
                 <span class="memberName">@member</span>
-                <span class="delete fa fa-remove" onclick="deleteMember(@i)"></span>
+                <span class="delete fa fa-remove" onclick="deleteMember(@Model.TeamMembers[i].Id)"></span>
                 <span class="edit fa fa-pencil"></span>
             </li>
         }

@@ -15,16 +15,15 @@ namespace HelloWorldWeb.Services
             this.teamInfo = new TeamInfo
             {
                 Name = "Team 3",
-                TeamMembers = new List<string>(new string[]
-                {
-                    "Radu",
-                    "Teona",
-                    "Claudia",
-                    "Dragos",
-                    "Leon",
-                    "George",
-                }),
+                TeamMembers = new List<TeamMember>(),
             };
+
+            this.teamInfo.TeamMembers.Add(new TeamMember("Teona"));
+            this.teamInfo.TeamMembers.Add(new TeamMember("Radu"));
+            this.teamInfo.TeamMembers.Add(new TeamMember("George"));
+            this.teamInfo.TeamMembers.Add(new TeamMember("Dragos"));
+            this.teamInfo.TeamMembers.Add(new TeamMember("Claudia"));
+            this.teamInfo.TeamMembers.Add(new TeamMember("Leon"));
         }
 
         public TeamInfo GetTeamInfo()
@@ -32,14 +31,30 @@ namespace HelloWorldWeb.Services
             return this.teamInfo;
         }
 
-        public void RemoveMember(int memberIndex)
+        public TeamMember GetTeamMemberById(int id)
         {
-            this.teamInfo.TeamMembers.RemoveAt(memberIndex);
+            foreach (TeamMember teamMember in this.teamInfo.TeamMembers)
+            {
+                if (id == teamMember.Id)
+                {
+                    return teamMember;
+                }
+            }
+
+            return null;
         }
 
-        public void AddTeamMember(string name)
+        public void RemoveMember(int memberIndex)
         {
-            this.teamInfo.TeamMembers.Add(name);
+            this.teamInfo.TeamMembers.Remove(this.GetTeamMemberById(memberIndex));
+        }
+
+        public int AddTeamMember(string name)
+        {
+            TeamMember teamMember = new TeamMember(name);
+
+            this.teamInfo.TeamMembers.Add(teamMember);
+            return teamMember.Id;
         }
     }
 }

@@ -11,10 +11,11 @@ $(document).ready(function () {
                 "name": newcomerName
             },
             success: function (result) {
+                var g = result;
                 $("#teamMembers").append(`
             <li class="member">
             <span class="memberName">${newcomerName}</span>
-            <span class="delete fa fa-remove" onclick="deleteMember(${length})"></span>
+            <span class="delete fa fa-remove" onclick="deleteMember(${g})"></span>
             <span class="edit fa fa-pencil"></span>
              </li>`);
                 $("#nameField").val("");
