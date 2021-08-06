@@ -34,7 +34,7 @@ namespace HelloWorldWeb.Controllers
         [HttpPost]
         public void UpdateMemberName(int memberId, string name)
         {
-            teamService.UpdateMemberName(memberId, name);
+            this.teamService.UpdateMemberName(memberId, name);
         }
 
         [HttpDelete]
