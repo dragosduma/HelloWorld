@@ -31,6 +31,12 @@ namespace HelloWorldWeb.Controllers
             return this.teamService.AddTeamMember(name);
         }
 
+        [HttpPost]
+        public void UpdateMemberName(int memberId, string name)
+        {
+            teamService.UpdateMemberName(memberId, name);
+        }
+
         [HttpDelete]
         public void RemoveMember(int memberIndex)
         {

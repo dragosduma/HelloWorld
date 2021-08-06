@@ -12,20 +12,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 }
 
+@section ModalWindow {
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="editClassmate" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Classmate</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>
+                        Name
+                        <input id="classmateName" title="Name" type="text">
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="submit" type="button" class="btn" data-dismiss="modal">Submit</button>
+                    <button id="cancel" type="button" class="btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 <div class="text-center">
     <h1 class="display-4">Our Team</h1>
     <ul id="teamMembers">
         @for (var i = 0; i < Model.TeamMembers.Count; i++)
         {
-            var member = Model.TeamMembers[i].Name;
-            <li class="member">
-                <span class="memberName">@member</span>
-                <span class="delete fa fa-remove" onclick="deleteMember(@Model.TeamMembers[i].Id)"></span>
-                <span class="edit fa fa-pencil"></span>
-            </li>
+            var member = Model.TeamMembers[i];
+        <li class="member" member-id="@member.Id">
+            <span class="name">@member.Name</span>
+            <span class="delete fa fa-remove" onclick="deleteMember(@Model.TeamMembers[i].Id)"></span>
+            <span class="pencil fa fa-pencil"></span>
+        </li>
         }
     </ul>
     <input type="text" id="nameField" title="e.g. Radu" />
-    <button class="btn-primary" id="createButton" disabled=true title="Create">Create</button>
-    <button class="btn-primary" id="clearButton" title="Clear" >Clear</button>
+    <button class="btn-primary" id="createButton" disabled=disabled title="Create">Create</button>
+    <button class="btn-primary" id="clearButton" title="Clear">Clear</button>
 </div>

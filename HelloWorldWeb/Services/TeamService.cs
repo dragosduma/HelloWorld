@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using HelloWorldWeb.Models;
 
 namespace HelloWorldWeb.Services
@@ -17,13 +14,12 @@ namespace HelloWorldWeb.Services
                 Name = "Team 3",
                 TeamMembers = new List<TeamMember>(),
             };
-
-            this.teamInfo.TeamMembers.Add(new TeamMember("Teona"));
-            this.teamInfo.TeamMembers.Add(new TeamMember("Radu"));
-            this.teamInfo.TeamMembers.Add(new TeamMember("George"));
-            this.teamInfo.TeamMembers.Add(new TeamMember("Dragos"));
-            this.teamInfo.TeamMembers.Add(new TeamMember("Claudia"));
-            this.teamInfo.TeamMembers.Add(new TeamMember("Leon"));
+            this.AddTeamMember("Teona");
+            this.AddTeamMember("Radu");
+            this.AddTeamMember("George");
+            this.AddTeamMember("Dragos");
+            this.AddTeamMember("Claudia");
+            this.AddTeamMember("Leon");
         }
 
         public TeamInfo GetTeamInfo()
@@ -44,9 +40,9 @@ namespace HelloWorldWeb.Services
             return null;
         }
 
-        public void RemoveMember(int memberIndex)
+        public void RemoveMember(int id)
         {
-            this.teamInfo.TeamMembers.Remove(this.GetTeamMemberById(memberIndex));
+            this.teamInfo.TeamMembers.Remove(this.GetTeamMemberById(id));
         }
 
         public int AddTeamMember(string name)
@@ -55,6 +51,12 @@ namespace HelloWorldWeb.Services
 
             this.teamInfo.TeamMembers.Add(teamMember);
             return teamMember.Id;
+        }
+
+        public void UpdateMemberName(int memberId, string name)
+        {
+            int index = this.teamInfo.TeamMembers.FindIndex(element => element.Id == memberId);
+            this.teamInfo.TeamMembers[index].Name = name;
         }
     }
 }

@@ -9,5 +9,9 @@ namespace HelloWorldWeb.Services
         public void RemoveMember(int memberIndex);
 
         TeamInfo GetTeamInfo();
+
+        public TeamMember GetTeamMemberById(int v);
+
+        public void UpdateMemberName(int memberId, string name);
     }
 }
