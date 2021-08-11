@@ -1,3 +1,4 @@
+using HelloWorldWeb.Models;
 using HelloWorldWeb.Services;
 using System;
 using Xunit;
@@ -61,5 +62,18 @@ namespace HelloWorldWeb.Tests
             var member = teamService.GetTeamInfo().TeamMembers.Find(element => element.Name == "Borys");
             Assert.Null(member);
         }
+
+        [Fact]
+        public void TestForGetAgeMethod()
+        {
+            //Assume
+            var newTeamMember = new TeamMember("Intern");
+            newTeamMember.Birthdate = new DateTime(1990, 09,30);
+            //Act
+            int age = newTeamMember.GetAge();
+            //Assert
+            Assert.Equal(30,age);
+        }
+
     }
 }
