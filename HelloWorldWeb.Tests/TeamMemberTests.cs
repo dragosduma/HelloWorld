@@ -20,17 +20,16 @@ namespace HelloWorldWeb.Tests
         }
 
         [Fact]
-        public void RemoveMemberFromTheTeamAfterAdding()
+        public void RemoveMemberFromTheTeam()
         {
             // Assume
             TeamService teamService = new TeamService();
 
             // Act
-            teamService.AddTeamMember("intern");
             teamService.RemoveMember(2);
 
             // Assert
-            Assert.Equal(7, teamService.GetTeamInfo().TeamMembers.Count);
+            Assert.Equal(6, teamService.GetTeamInfo().TeamMembers.Count);
         }
 
         [Fact]
