@@ -33,18 +33,18 @@ namespace HelloWorldWeb.Tests
             Assert.Equal(6, teamService.GetTeamInfo().TeamMembers.Count);
         }
 
-       /* [Fact]
+        [Fact]
         public void UpdateMemberName()
         {
             // Assume
             ITeamService teamService = new TeamService();
-
+            var targetTeamMember = teamService.GetTeamInfo().TeamMembers[0];
+            var memberId = targetTeamMember.Id;
             // Act
-            teamService.UpdateMemberName(1, "UnitTest");
+            teamService.UpdateMemberName(memberId, "UnitTest");
 
             // Assert
-            var member = teamService.GetTeamMemberById(1);
-            Assert.Equal("UnitTest", member.Name);
-        }*/
+            Assert.Equal("UnitTest", teamService.GetTeamMemberById(memberId).Name);
+        }
     }
 }
