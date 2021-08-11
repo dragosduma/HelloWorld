@@ -3,15 +3,18 @@
 // </copyright>
 
 using System;
+using HelloWorldWeb.Services;
 
 namespace HelloWorldWeb.Models
 {
     public class TeamMember
     {
         private static int idCount = 0;
+        private readonly ITimeService timeService;
 
-        public TeamMember(string name)
+        public TeamMember(string name, ITimeService timeService)
         {
+            this.timeService = timeService;
             this.Name = name;
             this.Id = idCount;
             idCount++;
@@ -27,9 +30,6 @@ namespace HelloWorldWeb.Models
         {
             var age = DateTime.Now.Subtract(this.Birthdate).Days;
             age = age / 365;
-
-
-
             return age;
         }
     }

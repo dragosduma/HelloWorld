@@ -7,6 +7,13 @@ namespace HelloWorldWeb.Tests
 {
     public class TeamServiceTest
     {
+        private readonly ITimeService timeService;
+
+        public TeamServiceTest()
+        {
+            timeService = new FakeTimeService();
+        }
+
         [Fact]
         public void AddTeamMemberToTheTeam()
         {
@@ -67,12 +74,20 @@ namespace HelloWorldWeb.Tests
         public void TestForGetAgeMethod()
         {
             //Assume
-            var newTeamMember = new TeamMember("Intern");
+            var newTeamMember = new TeamMember("Intern", this.timeService);
             newTeamMember.Birthdate = new DateTime(1990, 09,30);
             //Act
             int age = newTeamMember.GetAge();
             //Assert
             Assert.Equal(30,age);
+        }
+
+        private class FakeTimeService : ITimeService
+        {
+            public DateTime GetDate()
+            {
+                return new DateTime(2021, 08, 11);
+            }
         }
 
     }
