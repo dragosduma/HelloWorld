@@ -8,13 +8,16 @@ namespace HelloWorldWeb.Tests
 {
     public class TeamServiceTest
     {
-        private readonly ITimeService timeService;
-
+        private Mock<ITimeService> timeMock;
         public TeamServiceTest()
         {
-            var mock = new Mock<ITimeService>();
-            mock.Setup(_ => _.GetDate()).Returns(new DateTime(2021, 08, 11));
-            timeService = mock.Object; 
+            InitializeTimeServiceMock();
+        }
+
+        internal void InitializeTimeServiceMock()
+        {
+            timeMock = new Mock<ITimeService>();
+            timeMock.Setup(_ => _.GetDate()).Returns(new DateTime(2021, 08, 11));           
         }
 
         [Fact]
@@ -77,11 +80,14 @@ namespace HelloWorldWeb.Tests
         public void TestForGetAgeMethod()
         {
             //Assume
-            var newTeamMember = new TeamMember("Intern", this.timeService);
-            newTeamMember.Birthdate = new DateTime(1990, 09,30);
+            InitializeTimeServiceMock();
+            var timeService = timeMock.Object;
+            var newTeamMember = new TeamMember("Intern", timeService);
+            newTeamMember.Birthdate = new DateTime(1990, 09,30);           
             //Act
             int age = newTeamMember.GetAge();
             //Assert
+            timeMock.Verify(_ => _.GetDate(), Times.AtMostOnce());
             Assert.Equal(30,age);
         }
     }
