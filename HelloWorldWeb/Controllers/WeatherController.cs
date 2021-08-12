@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HelloWorldWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 
 #pragma warning disable IDE0017 // Simplify object initialization
@@ -35,11 +36,24 @@ namespace HelloWorldWeb.Controllers
 
         public IEnumerable<DailyWeatherRecord> ConvertResponseToWeatherRecordList(string content)
         {
-            return new DailyWeatherRecord[]
+            var json = JObject.Parse(content);
+
+            List<DailyWeatherRecord> result = new List<DailyWeatherRecord>();
+
+            var jsonArray = json["daily"].Take(7);
+
+            foreach (var item in jsonArray)
             {
-                new DailyWeatherRecord(new DateTime(2021, 08, 12), 22.0f, WeatherType.Mild),
-                new DailyWeatherRecord(new DateTime(2021, 08, 12), 25.0f, WeatherType.Mild),
-            };
+                // TODO: Convert item to DailyWeatherRecord
+                long unixDateTime = item.Value<long>("dt");
+                DailyWeatherRecord dailyWeatherRecord = new DailyWeatherRecord(new DateTime(2021, 08, 12), 22.0f, WeatherType.Mild);
+                dailyWeatherRecord.Day = DateTimeOffset.FromUnixTimeSeconds(unixDateTime).DateTime.Date;
+                dailyWeatherRecord.Temperature = item.SelectToken("temp").Value<float>("day");
+
+                result.Add(dailyWeatherRecord);
+            }
+
+            return result;
         }
 
         // GET api/<WeatherController>/5
