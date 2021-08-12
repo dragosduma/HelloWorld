@@ -50,10 +50,27 @@ namespace HelloWorldWeb.Controllers
                 dailyWeatherRecord.Day = DateTimeOffset.FromUnixTimeSeconds(unixDateTime).DateTime.Date;
                 dailyWeatherRecord.Temperature = item.SelectToken("temp").Value<float>("day");
 
+                string weather = item.SelectToken("weather")[0].Value<string>("description");
+                dailyWeatherRecord.Type = Convert(weather);
                 result.Add(dailyWeatherRecord);
             }
 
             return result;
+        }
+
+        private WeatherType Convert(string weather)
+        {
+            switch (weather)
+            {
+                case "few clouds":
+                    return WeatherType.FewClouds;
+                case "light rain":
+                    return WeatherType.LightRain;
+                case "broken clouds":
+                    return WeatherType.BrokenClouds;
+                default:
+                    throw new Exception($"Unknown weather type {weather}.");
+            }
         }
 
         // GET api/<WeatherController>/5

@@ -13,5 +13,7 @@
         Sweltering,
         Scorching,
         FewClouds,
+        LightRain,
+        BrokenClouds,
     }
 }
