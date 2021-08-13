@@ -13,6 +13,9 @@ using RestSharp;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace HelloWorldWeb.Controllers
 {
+    /// <summary>
+    /// Fetch data from weather API.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class WeatherController : ControllerBase
