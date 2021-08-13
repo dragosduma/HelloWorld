@@ -6,6 +6,22 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+   <ItemGroup>
+    <None Remove="TestData\ContentWeatherApi.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\ContentWeatherApi.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TestData\ContentWeatherApi.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="Moq" Version="4.16.1" />
