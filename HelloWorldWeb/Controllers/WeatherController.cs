@@ -48,7 +48,7 @@ namespace HelloWorldWeb.Controllers
                 long unixDateTime = item.Value<long>("dt");
                 DailyWeatherRecord dailyWeatherRecord = new DailyWeatherRecord(new DateTime(2021, 08, 12), 22.0f, WeatherType.Mild);
                 dailyWeatherRecord.Day = DateTimeOffset.FromUnixTimeSeconds(unixDateTime).DateTime.Date;
-                dailyWeatherRecord.Temperature = item.SelectToken("temp").Value<float>("day");
+                dailyWeatherRecord.Temperature = item.SelectToken("temp").Value<float>("day") - 272.88f;
 
                 string weather = item.SelectToken("weather")[0].Value<string>("description");
                 dailyWeatherRecord.Type = Convert(weather);
