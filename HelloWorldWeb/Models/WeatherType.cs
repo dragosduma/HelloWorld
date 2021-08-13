@@ -15,5 +15,6 @@
         FewClouds,
         LightRain,
         BrokenClouds,
+        ScatteredClouds,
     }
 }

@@ -44,9 +44,8 @@ namespace HelloWorldWeb.Controllers
 
             foreach (var item in jsonArray)
             {
-                // TODO: Convert item to DailyWeatherRecord
                 long unixDateTime = item.Value<long>("dt");
-                DailyWeatherRecord dailyWeatherRecord = new DailyWeatherRecord(new DateTime(2021, 08, 12), 22.0f, WeatherType.Mild);
+                DailyWeatherRecord dailyWeatherRecord = new DailyWeatherRecord();
                 dailyWeatherRecord.Day = DateTimeOffset.FromUnixTimeSeconds(unixDateTime).DateTime.Date;
                 dailyWeatherRecord.Temperature = item.SelectToken("temp").Value<float>("day") - 272.88f;
 
@@ -68,6 +67,8 @@ namespace HelloWorldWeb.Controllers
                     return WeatherType.LightRain;
                 case "broken clouds":
                     return WeatherType.BrokenClouds;
+                case "scattered clouds":
+                    return WeatherType.ScatteredClouds;
                 default:
                     throw new Exception($"Unknown weather type {weather}.");
             }
