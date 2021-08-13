@@ -16,5 +16,8 @@
         LightRain,
         BrokenClouds,
         ScatteredClouds,
+        OvercastClouds,
+        ClearSky,
+        ModerateRain,
     }
 }

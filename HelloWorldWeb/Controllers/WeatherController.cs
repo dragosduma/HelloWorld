@@ -17,9 +17,16 @@ namespace HelloWorldWeb.Controllers
     [ApiController]
     public class WeatherController : ControllerBase
     {
-        private readonly string latitude = "46.7700";
-        private readonly string longitude = "23.5800";
-        private readonly string apiKey = "8cd97ba68fce7f8e6a81989651609eaf";
+        private readonly string latitude;
+        private readonly string longitude;
+        private readonly string apiKey;
+
+        public WeatherController(IWeatherControllerSettings conf)
+        {
+            longitude = conf.Longitude;
+            latitude = conf.Latitude;
+            apiKey = conf.ApiKey;
+        }
 
         // GET: api/<WeatherController>
         [HttpGet]
@@ -64,6 +71,12 @@ namespace HelloWorldWeb.Controllers
                     return WeatherType.BrokenClouds;
                 case "scattered clouds":
                     return WeatherType.ScatteredClouds;
+                case "overcast clouds":
+                    return WeatherType.OvercastClouds;
+                case "clear sky":
+                    return WeatherType.ClearSky;
+                case "moderate rain":
+                    return WeatherType.ModerateRain;
                 default:
                     throw new Exception($"Unknown weather type {weather}.");
             }

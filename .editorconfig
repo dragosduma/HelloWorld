@@ -2,7 +2,7 @@
 
 # Default severity for analyzer diagnostics with category 'StyleCop.CSharp.DocumentationRules'
 dotnet_analyzer_diagnostic.category-StyleCop.CSharp.DocumentationRules.severity = none
-dotnet_diagnostic.SA0001.severity=silent
+dotnet_diagnostic.SA0001.severity=none
 
 # CS0649: Field 'TeamService.timeService' is never assigned to, and will always have its default value null
 dotnet_diagnostic.CS0649.severity = silent
