@@ -45,6 +45,17 @@ namespace HelloWorldWeb.Controllers
             return this.ConvertResponseToWeatherRecordList(response.Content);
         }
 
+        /// <summary>
+        /// Get a weather forecast for the day in specified amount of days from now.
+        /// </summary>
+        /// <param name="index">Amount of days from now (from 0 to 7).</param>
+        /// <returns>The weather forecast.</returns>
+        [HttpGet("{index}")]
+        public DailyWeatherRecord Get(int index)
+        {
+            return Get().ElementAt(index);
+        }
+
         [NonAction]
         public IEnumerable<DailyWeatherRecord> ConvertResponseToWeatherRecordList(string content)
         {
@@ -86,17 +97,6 @@ namespace HelloWorldWeb.Controllers
                     throw new Exception($"Unknown weather type {weather}.");
             }
         }
-
-        /// <summary>
-        /// Get a weather forecast for the day in specified amount of days from now.
-        /// </summary>
-        /// <param name="id">Amount of days from now (from 0 to 7).</param>
-        /// <returns>The weather forecast.</returns>
-        [HttpGet("{id}")]
 #pragma warning disable SA1202 // Elements should be ordered by access
-        public string Get(int id)
-        {
-            return "value";
-        }
     }
 }
