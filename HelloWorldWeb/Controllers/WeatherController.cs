@@ -87,6 +87,12 @@ namespace HelloWorldWeb.Controllers
         }
 
         // GET api/<WeatherController>/5
+
+        /// <summary>
+        /// Get a weather forecast for the day in specified amount of days from now.
+        /// </summary>
+        /// <param name="id">Amount of days from now (from 0 to 7).</param>
+        /// <returns>The weather forecast.</returns>
         [HttpGet("{id}")]
 #pragma warning disable SA1202 // Elements should be ordered by access
         public string Get(int id)
