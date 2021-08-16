@@ -14,7 +14,7 @@ using RestSharp;
 namespace HelloWorldWeb.Controllers
 {
     /// <summary>
-    /// Fetch data from weather API. 
+    /// Fetch data from weather API.
     /// <see href="https://openweathermap.org/api">Weather API</see>
     /// </summary>
     [Route("api/[controller]")]
