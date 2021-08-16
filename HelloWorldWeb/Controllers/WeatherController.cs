@@ -14,7 +14,8 @@ using RestSharp;
 namespace HelloWorldWeb.Controllers
 {
     /// <summary>
-    /// Fetch data from weather API.
+    /// Fetch data from weather API. 
+    /// <see href="https://openweathermap.org/api">Weather API</see>
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -85,8 +86,6 @@ namespace HelloWorldWeb.Controllers
                     throw new Exception($"Unknown weather type {weather}.");
             }
         }
-
-        // GET api/<WeatherController>/5
 
         /// <summary>
         /// Get a weather forecast for the day in specified amount of days from now.
