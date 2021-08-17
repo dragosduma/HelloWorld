@@ -47,8 +47,7 @@ namespace HelloWorldWeb.Services
 
         public int AddTeamMember(string name)
         {
-            TeamMember teamMember = new TeamMember(name);
-
+            TeamMember teamMember = new TeamMember() { Name = name };
             this.teamInfo.TeamMembers.Add(teamMember);
             return teamMember.Id;
         }
