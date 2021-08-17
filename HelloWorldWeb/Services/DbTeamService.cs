@@ -46,7 +46,9 @@ namespace HelloWorldWeb.Services
 
         public void UpdateMemberName(int memberId, string name)
         {
-            throw new NotImplementedException();
+            TeamMember teamMember = this.context.TeamMembers.Find(memberId);
+            teamMember.Name = name;
+            this.context.SaveChanges();
         }
     }
 }
