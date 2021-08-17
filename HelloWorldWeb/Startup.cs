@@ -33,7 +33,7 @@ namespace HelloWorldWeb
         {
             services.AddSingleton<ITeamService>(new TeamService());
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
+                options.UseNpgsql(
                     this.Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
