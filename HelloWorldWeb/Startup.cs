@@ -72,5 +72,15 @@ namespace HelloWorldWeb
                 endpoints.MapRazorPages();
             });
         }
+
+        public static string ConvertHerokuStringToAspnetString(string herokuConnectionString)
+        {
+            var databaseUri = new Uri(herokuConnectionString);
+            string databaseUriArray = databaseUri.UserInfo;
+            
+            var databaseUriUsername = databaseUriArray.Split(':')[0];
+            var databaseUriPassword = databaseUriArray.Split(':')[1];
+            return $"Host={databaseUri.Host};Port={databaseUri.Port};Username={databaseUriUsername};Password={databaseUriPassword};Database={databaseUri.LocalPath.TrimStart('/')};Pooling=true;SSL Mode=Require;TrustServerCertificate=True;";
+        }
     }
 }
