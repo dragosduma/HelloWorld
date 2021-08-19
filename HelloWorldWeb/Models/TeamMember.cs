@@ -3,10 +3,12 @@
 // </copyright>
 
 using System;
+using System.Diagnostics;
 using HelloWorldWeb.Services;
 
 namespace HelloWorldWeb.Models
 {
+    [DebuggerDisplay("{Name}[{Id}]")]
     public class TeamMember
     {
         private static int idCount = 0;
