@@ -13,8 +13,11 @@ namespace CSharpFeatures
             string jsonString = JsonSerializer.Serialize(teamMember);
             Console.WriteLine(jsonString);
             File.WriteAllText("TeamMember.json", jsonString);
-            var teamMemberDeserialized = JsonSerializer.Deserialize<TeamMember>(jsonString);
-            
+            var readText = File.ReadAllTextAsync("TeamMember.json");
+            readText.Wait();
+            var expectedOutput = readText.Result;
+            var teamMemberDeserialized = JsonSerializer.Deserialize<TeamMember>(expectedOutput);
+            Console.WriteLine(teamMemberDeserialized);
         }
     }
 }
