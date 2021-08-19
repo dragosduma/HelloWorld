@@ -9,7 +9,7 @@ namespace CSharpFeatures
         static void Main(string[] args)
         {
             
-           /* TeamMember teamMember = new TeamMember() { Name = "Member1" };
+            TeamMember teamMember = new TeamMember() { Name = "Member1" };
             string jsonString = JsonSerializer.Serialize(teamMember);
             Console.WriteLine(jsonString);
             File.WriteAllText("TeamMember.json", jsonString);
@@ -17,7 +17,7 @@ namespace CSharpFeatures
             readText.Wait();
             var expectedOutput = readText.Result;
             var teamMemberDeserialized = JsonSerializer.Deserialize<TeamMember>(expectedOutput);
-            Console.WriteLine(teamMemberDeserialized);*/
+            Console.WriteLine(teamMemberDeserialized);
 
             Console.Write("What would you like? ");
             var customerInput = Console.ReadLine();
