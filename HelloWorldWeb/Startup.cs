@@ -32,10 +32,10 @@ namespace HelloWorldWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ITeamService>(new TeamService());
+            services.AddSingleton<ITeamService, TeamService>();
             services.AddSingleton<IWeatherControllerSettings, WeatherControllerSettings>();
             services.AddControllersWithViews();
-            services.AddSingleton<ITimeService>(new TimeService());
+            services.AddSingleton<ITimeService, TimeService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hello World API", Version = "v1" });
@@ -45,6 +45,7 @@ namespace HelloWorldWeb
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
             });
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,6 +75,7 @@ namespace HelloWorldWeb
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<MessageHub>("/messagehub");
             });
         }
     }

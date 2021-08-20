@@ -5,7 +5,8 @@
 }
 
 @section scripts {
-    <script type="text/javascript" src="~/js/Index.js"></script>
+    <script src="~/lib/microsoft-signalr/signalr.js"></script>
+    <script type="text/javascript" src="~/js/Index.js"></script>   
 }
 
 @section AdditionalStyles {
@@ -49,11 +50,11 @@
         @for (var i = 0; i < Model.TeamMembers.Count; i++)
         {
             var member = Model.TeamMembers[i];
-        <li class="member" member-id="@member.Id">
-            <span class="name">@member.Name</span>
-            <span class="delete fa fa-remove" onclick="deleteMember(@Model.TeamMembers[i].Id)"></span>
-            <span class="pencil fa fa-pencil"></span>
-        </li>
+            <li class="member" member-id="@member.Id">
+                <span class="name">@member.Name</span>
+                <span class="delete fa fa-remove" onclick="deleteMember(@Model.TeamMembers[i].Id)"></span>
+                <span class="pencil fa fa-pencil"></span>
+            </li>
         }
     </ul>
     <input type="text" id="nameField" title="e.g. Radu" />
