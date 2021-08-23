@@ -48,6 +48,7 @@ namespace HelloWorldWeb.Services
         public void RemoveMember(int id)
         {
             this.teamInfo.TeamMembers.Remove(this.GetTeamMemberById(id));
+            this.broadcastService.TeamMemberDeleted(id);
         }
 
         public int AddTeamMember(string name)

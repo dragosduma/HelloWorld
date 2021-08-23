@@ -4,8 +4,11 @@ $(document).ready(function () {
     var connection = new signalR.HubConnectionBuilder().withUrl("/messagehub").build();
 
     connection.on("NewTeamMemberAdded", function (name, Id) {
-        console.log(`New team member added: ${name}, ${Id}`);
         createNewcomer(name, Id)
+    });
+
+    connection.on("TeamMemberDeleted", function (Id) {
+        removeTeamMemberFromList(Id);
     });
 
     connection.start().then(function () {
@@ -26,19 +29,11 @@ $(document).ready(function () {
                 "name": newcomerName
             },
             success: function (result) {
-                var g = result;
-                $("#teamMembers").append(`
-            <li class="member" member-id=${result}>
-            <span class="memberName">${newcomerName}</span>
-            <span class="delete fa fa-remove" onclick="deleteMember(${g})"></span>
-            <span class="pencil fa fa-pencil"></span>
-             </li>`);
                 $("#nameField").val("");
                 document.getElementById("createButton").disabled = true;
             }
         })  
     })
-
 
     $("#teamMembers").on("click", ".pencil", function () {
         var targetMemberTag = $(this).closest('li');
@@ -62,7 +57,6 @@ $(document).ready(function () {
                 name: newName
             },
             success: function (result) {
-                location.reload();
             }
         })
     })
@@ -105,12 +99,12 @@ function deleteMember(index) {
 
 function createNewcomer(name, id) {
     // Remember string interpolation
-    $("#teamMembers").append(`<li class="member" member-id="${id}">
-            <span class="name">${name}</span>
+    $("#teamMembers").append(
+        `<li class="member" member-id=${id}>
+            <span class="name" >${name}</span>
             <span class="delete fa fa-remove" onclick="deleteMember(${id})"></span>
-            <span class="pencil fa fa-pencil"></span>
-    </li>`);
+               <span class="pencil fa fa-pencil"></span>
+        </li>`);
 }
-/*$("#clear").click(function () {
-    $("#newcomer").val("");
-});*/
+
+const removeTeamMemberFromList = (teamMemberId) => $(`li[member-id=${teamMemberId}]`).remove();

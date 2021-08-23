@@ -19,5 +19,10 @@ namespace HelloWorldWeb.Services
         {
             this.messageHub.Clients.All.SendAsync("NewTeamMemberAdded", name, id);
         }
+
+        public void TeamMemberDeleted(int id)
+        {
+            this.messageHub.Clients.All.SendAsync("TeamMemberDeleted", id);
+        }
     }
 }
