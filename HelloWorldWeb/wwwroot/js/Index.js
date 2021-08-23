@@ -11,6 +11,10 @@ $(document).ready(function () {
         removeTeamMemberFromList(Id);
     });
 
+    connection.on("UpdateTeamMember", (name, id) => {
+        updateTeamMemberFromList(name, id)
+    })
+
     connection.start().then(function () {
         console.log("signalr connected");
     }).catch(function (err) {
@@ -108,3 +112,4 @@ function createNewcomer(name, id) {
 }
 
 const removeTeamMemberFromList = (teamMemberId) => $(`li[member-id=${teamMemberId}]`).remove();
+const updateTeamMemberFromList = (teamMemberName, teamMemberId) => $(`li[member-id=${teamMemberId}]`).children(".name").text(teamMemberName)

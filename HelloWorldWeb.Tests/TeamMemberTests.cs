@@ -60,14 +60,15 @@ namespace HelloWorldWeb.Tests
         public void UpdateMemberName()
         {
             // Assume
-            ITeamService teamService = new TeamService(broadcastService);
-            var targetTeamMember = teamService.GetTeamInfo().TeamMembers[0];
-            var memberId = targetTeamMember.Id;
+            Mock<IBroadcastService> broadcastServiceMock = new Mock<IBroadcastService>();
+            var broadcastService = broadcastServiceMock.Object;
+            var teamService = new TeamService(broadcastService);
+            var id = teamService.GetTeamInfo().TeamMembers[0].Id;
             // Act
-            teamService.UpdateMemberName(memberId, "UnitTest");
+            teamService.UpdateMemberName(id, "UnitTest");
 
             // Assert
-            Assert.Equal("UnitTest", teamService.GetTeamMemberById(memberId).Name);
+            Assert.Equal("UnitTest", teamService.GetTeamMemberById(id).Name);
         }
 
         [Fact]
