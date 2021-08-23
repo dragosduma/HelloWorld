@@ -54,7 +54,11 @@ namespace HelloWorldWeb.Services
         {
             TeamMember teamMember = new TeamMember(name, this.timeService);
             this.teamInfo.TeamMembers.Add(teamMember);
-            this.messageHub.Clients.All.SendAsync("NewTeamMemberAdded", name, teamMember.Id);
+            if (this.messageHub.Clients != null)
+            {
+                this.messageHub.Clients.All.SendAsync("NewTeamMemberAdded", name, teamMember.Id);
+            }
+
             return teamMember.Id;
         }
 
