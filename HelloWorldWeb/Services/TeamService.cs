@@ -67,7 +67,7 @@ namespace HelloWorldWeb.Services
         {
             TeamMember member = this.teamInfo.TeamMembers.Single(element => element.Id == memberId);
             member.Name = name;
-            broadcastService.UpdateTeamMember(name, memberId);
+            this.broadcastService.UpdateTeamMember(name, memberId);
         }
     }
 }
