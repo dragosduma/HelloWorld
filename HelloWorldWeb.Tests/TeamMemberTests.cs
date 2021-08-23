@@ -9,6 +9,7 @@ namespace HelloWorldWeb.Tests
     public class TeamServiceTest
     {
         private Mock<ITimeService> timeMock;
+        private IBroadcastService broadcastService;
         public TeamServiceTest()
         {
             InitializeTimeServiceMock();
@@ -24,20 +25,23 @@ namespace HelloWorldWeb.Tests
         public void AddTeamMemberToTheTeam()
         {
             // Assume
-            TeamService teamService = new TeamService();
+            Mock<IBroadcastService> broadcastServiceMock = new Mock<IBroadcastService>();
+            broadcastService = broadcastServiceMock.Object;
+            TeamService teamService = new TeamService(broadcastService);
 
             // Act
             teamService.AddTeamMember("intern");
 
             // Assert
-            Assert.Equal(7, teamService.GetTeamInfo().TeamMembers.Count);           
+            Assert.Equal(7, teamService.GetTeamInfo().TeamMembers.Count);
+            broadcastServiceMock.Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
         public void RemoveMemberFromTheTeam()
         {
             // Assume
-            TeamService teamService = new TeamService();
+            TeamService teamService = new TeamService(broadcastService);
 
             // Act
             teamService.RemoveMember(2);
@@ -50,7 +54,7 @@ namespace HelloWorldWeb.Tests
         public void UpdateMemberName()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(broadcastService);
             var targetTeamMember = teamService.GetTeamInfo().TeamMembers[0];
             var memberId = targetTeamMember.Id;
             // Act
@@ -64,7 +68,7 @@ namespace HelloWorldWeb.Tests
         public void CheckIdProblem()
         {
             //Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(broadcastService);
             var memberToBeDeleted = teamService.GetTeamInfo().TeamMembers[teamService.GetTeamInfo().TeamMembers.Count-2];
             var newMemberName = "Borys";
             //Act

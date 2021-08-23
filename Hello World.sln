@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpFeatures", "CSharpFeatures\CSharpFeatures.csproj", "{E6AC65E5-2628-4D31-B41B-9F18C5DDC634}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldWeb.Tests", "HelloWorldWeb.Tests\HelloWorldWeb.Tests.csproj", "{A7D5FBE5-7E04-4491-BFC9-DB22326E59D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{E6AC65E5-2628-4D31-B41B-9F18C5DDC634}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6AC65E5-2628-4D31-B41B-9F18C5DDC634}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6AC65E5-2628-4D31-B41B-9F18C5DDC634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7D5FBE5-7E04-4491-BFC9-DB22326E59D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D5FBE5-7E04-4491-BFC9-DB22326E59D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D5FBE5-7E04-4491-BFC9-DB22326E59D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D5FBE5-7E04-4491-BFC9-DB22326E59D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
