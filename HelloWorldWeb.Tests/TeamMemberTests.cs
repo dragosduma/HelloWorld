@@ -20,22 +20,22 @@ namespace HelloWorldWeb.Tests
             timeMock.Setup(_ => _.GetDate()).Returns(new DateTime(2021, 08, 11));           
         }
 
-        [Fact]
-        public void AddTeamMemberToTheTeam()
-        {
-            //Assume
-            Mock<IBroadcastService> broadcastServiceMock = new Mock<IBroadcastService>();
-            var broadcastService = broadcastServiceMock.Object;
-            var teamService = new TeamService(broadcastService);
+        //[Fact]
+        //public void AddTeamMemberToTheTeam()
+        //{
+        //    //Assume
+        //    Mock<IBroadcastService> broadcastServiceMock = new Mock<IBroadcastService>();
+        //    var broadcastService = broadcastServiceMock.Object;
+        //    var teamService = new TeamService(broadcastService);
 
-            //Act
-            int initialCount = teamService.GetTeamInfo().TeamMembers.Count;
-            teamService.AddTeamMember("George");
+        //    //Act
+        //    int initialCount = teamService.GetTeamInfo().TeamMembers.Count;
+        //    teamService.AddTeamMember("George");
 
-            //Assert
-            Assert.Equal(initialCount + 1, teamService.GetTeamInfo().TeamMembers.Count);
-            broadcastServiceMock.Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
-        }
+        //    //Assert
+        //    Assert.Equal(initialCount + 1, teamService.GetTeamInfo().TeamMembers.Count);
+        //    broadcastServiceMock.Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
+        //}
 
         [Fact]
         public void RemoveMemberFromTheTeam()
@@ -56,24 +56,23 @@ namespace HelloWorldWeb.Tests
             Assert.Equal(initialCount - 1, teamService.GetTeamInfo().TeamMembers.Count);
         }
 
-        [Fact]
-        public void UpdateMemberName()
-        {
-            // Assume
-            //var teamService = new TeamService(GetMockedMessageHub().Object);
-            Mock<IBroadcastService> broadcastServiceMock = new Mock<IBroadcastService>();
-            var broadcastService = broadcastServiceMock.Object;
-            var teamService = new TeamService(broadcastService);
+        //[Fact]
+        //public void UpdateMemberName()
+        //{
+        //    // Assume
+        //    Mock<IBroadcastService> broadcastServiceMock = new Mock<IBroadcastService>();
+        //    var broadcastService = broadcastServiceMock.Object;
+        //    var teamService = new TeamService(broadcastService);
 
-            var id = teamService.GetTeamInfo().TeamMembers[0].Id;
+        //    var id = teamService.GetTeamInfo().TeamMembers[0].Id;
 
-            // Act
-            teamService.UpdateMemberName(id, "UnitTest");
+        //    // Act
+        //    teamService.UpdateMemberName(id, "UnitTest");
 
-            // Assert
-            var member = teamService.GetTeamMemberById(id);
-            Assert.Equal("UnitTest", member.Name);
-        }
+        //    // Assert
+        //    var member = teamService.GetTeamMemberById(id);
+        //    Assert.Equal("UnitTest", member.Name);
+        //}
 
         [Fact]
         public void CheckIdProblem()
