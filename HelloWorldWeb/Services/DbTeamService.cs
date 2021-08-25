@@ -10,7 +10,7 @@ namespace HelloWorldWeb.Services
     public class DbTeamService : ITeamService
     {
         private readonly ApplicationDbContext context;
-
+        private readonly ITimeService timeService;
         public DbTeamService(ApplicationDbContext context)
         {
             this.context = context;
@@ -18,7 +18,7 @@ namespace HelloWorldWeb.Services
 
         public int AddTeamMember(string name)
         {
-            TeamMember teamMember = new TeamMember() { Name = name };
+            TeamMember teamMember = new TeamMember(name, this.timeService);
             this.context.Add(teamMember);
             this.context.SaveChanges();
             return teamMember.Id;
