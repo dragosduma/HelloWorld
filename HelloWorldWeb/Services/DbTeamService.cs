@@ -10,18 +10,20 @@ namespace HelloWorldWeb.Services
     public class DbTeamService : ITeamService
     {
         private readonly ApplicationDbContext context;
-        private readonly ITimeService timeService;
+        private readonly IBroadcastService broadcastService;
 
-        public DbTeamService(ApplicationDbContext context)
+        public DbTeamService(ApplicationDbContext context, IBroadcastService broadcastService)
         {
             this.context = context;
+            this.broadcastService = broadcastService;
         }
 
         public int AddTeamMember(string name)
         {
-            TeamMember teamMember = new TeamMember();
+            TeamMember teamMember = new TeamMember() { Name = name };
             this.context.Add(teamMember);
             this.context.SaveChanges();
+            this.broadcastService.NewTeamMemberAdded(teamMember.Name, teamMember.Id);
             return teamMember.Id;
         }
 
@@ -43,6 +45,8 @@ namespace HelloWorldWeb.Services
             var teamMember = this.context.TeamMembers.Find(memberIndex);
             this.context.TeamMembers.Remove(teamMember);
             this.context.SaveChanges();
+
+            this.broadcastService.TeamMemberDeleted(memberIndex);
         }
 
         public void UpdateMemberName(int memberId, string name)
@@ -50,6 +54,7 @@ namespace HelloWorldWeb.Services
             TeamMember teamMember = this.context.TeamMembers.Find(memberId);
             teamMember.Name = name;
             this.context.SaveChanges();
+            this.broadcastService.UpdateTeamMember(name, memberId);
         }
     }
 }

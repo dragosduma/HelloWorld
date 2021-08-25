@@ -25,10 +25,26 @@ namespace HelloWorldWebApp
 
         public IConfiguration Configuration { get; }
 
+        public static string ConvertHerokuStringToASPString(string herokuConnectionString)
+        {
+            var databaseUri = new Uri(herokuConnectionString);
+            string[] userInfo = databaseUri.UserInfo.Split(':');
+
+            int port = databaseUri.Port;
+            string host = databaseUri.Host;
+            string userId = userInfo[0];
+            string password = userInfo[1];
+            string database = databaseUri.AbsolutePath[1..];
+
+            string result = $"Host={host};Port={port};Database={database};User Id={userId};Password={password};Pooling=true;SSL Mode=Require;TrustServerCertificate=True;Include Error Detail=True";
+            return result;
+        }
+
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
         /// <param name="services"></param>
+        ///
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
@@ -96,21 +112,6 @@ namespace HelloWorldWebApp
                 endpoints.MapHub<MessageHub>("/messagehub");
                 endpoints.MapRazorPages();
             });
-        }
-
-        public static string ConvertHerokuStringToASPString(string herokuConnectionString)
-        {
-            var databaseUri = new Uri(herokuConnectionString);
-            string[] userInfo = databaseUri.UserInfo.Split(':');
-
-            int port = databaseUri.Port;
-            string host = databaseUri.Host;
-            string userId = userInfo[0];
-            string password = userInfo[1];
-            string database = databaseUri.AbsolutePath[1..];
-
-            string result = $"Host={host};Port={port};Database={database};User Id={userId};Password={password};Pooling=true;SSL Mode=Require;TrustServerCertificate=True;Include Error Detail=True";
-            return result;
         }
     }
 }
