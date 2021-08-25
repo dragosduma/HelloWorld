@@ -11,6 +11,7 @@ namespace HelloWorldWeb.Services
     {
         private readonly ApplicationDbContext context;
         private readonly ITimeService timeService;
+
         public DbTeamService(ApplicationDbContext context)
         {
             this.context = context;
