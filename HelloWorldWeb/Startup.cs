@@ -1,18 +1,12 @@
-// <copyright file="Startup.cs" company="Principal33">
-// Copyright (c) Principal33. All rights reserved.
-// </copyright>
-
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
+using HelloWorldWeb;
 using HelloWorldWeb.Controllers;
+using HelloWorldWeb.Data;
 using HelloWorldWeb.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace HelloWorldWeb
+namespace HelloWorldWebApp
 {
     public class Startup
     {
@@ -31,13 +25,18 @@ namespace HelloWorldWeb
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ITeamService, TeamService>();
-            services.AddSingleton<IWeatherControllerSettings, WeatherControllerSettings>();
-            services.AddControllersWithViews();
+            services.AddSignalR();
+            services.AddScoped<ITeamService, DbTeamService>();
             services.AddSingleton<ITimeService, TimeService>();
+            services.AddSingleton<IBroadcastService, BroadcastService>();
+            services.AddSingleton<IWeatherControllerSettings, WeatherControllerSettings>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hello World API", Version = "v1" });
@@ -47,11 +46,22 @@ namespace HelloWorldWeb
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
             });
-            services.AddSignalR();
-            services.AddSingleton<IBroadcastService, BroadcastService>();
+            string databaseURL = Environment.GetEnvironmentVariable("DATABASE_URL");
+            databaseURL = databaseURL != null ? ConvertHerokuStringToASPString(databaseURL) : this.Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(databaseURL));
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddControllersWithViews();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -64,6 +74,8 @@ namespace HelloWorldWeb
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -80,8 +92,25 @@ namespace HelloWorldWeb
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapHub<MessageHub>("/messagehub");
+                endpoints.MapRazorPages();
             });
+        }
+
+        public static string ConvertHerokuStringToASPString(string herokuConnectionString)
+        {
+            var databaseUri = new Uri(herokuConnectionString);
+            string[] userInfo = databaseUri.UserInfo.Split(':');
+
+            int port = databaseUri.Port;
+            string host = databaseUri.Host;
+            string userId = userInfo[0];
+            string password = userInfo[1];
+            string database = databaseUri.AbsolutePath[1..];
+
+            string result = $"Host={host};Port={port};Database={database};User Id={userId};Password={password};Pooling=true;SSL Mode=Require;TrustServerCertificate=True;Include Error Detail=True";
+            return result;
         }
     }
 }
