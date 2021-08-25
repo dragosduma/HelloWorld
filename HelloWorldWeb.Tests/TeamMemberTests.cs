@@ -9,7 +9,6 @@ namespace HelloWorldWeb.Tests
     public class TeamServiceTest
     {
         private Mock<ITimeService> timeMock;
-        private IBroadcastService broadcastService;
         public TeamServiceTest()
         {
             InitializeTimeServiceMock();
@@ -24,17 +23,18 @@ namespace HelloWorldWeb.Tests
         [Fact]
         public void AddTeamMemberToTheTeam()
         {
-            // Assume
+            //Assume
             Mock<IBroadcastService> broadcastServiceMock = new Mock<IBroadcastService>();
-            broadcastService = broadcastServiceMock.Object;
-            TeamService teamService = new TeamService(broadcastService);
+            var broadcastService = broadcastServiceMock.Object;
+            var teamService = new TeamService(broadcastService);
 
-            // Act
-            teamService.AddTeamMember("intern");
+            //Act
+            int initialCount = teamService.GetTeamInfo().TeamMembers.Count;
+            teamService.AddTeamMember("George");
 
-            // Assert
-            Assert.Equal(7, teamService.GetTeamInfo().TeamMembers.Count);
-            broadcastServiceMock.Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once);
+            //Assert
+            Assert.Equal(initialCount + 1, teamService.GetTeamInfo().TeamMembers.Count);
+            broadcastServiceMock.Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
         }
 
         [Fact]
@@ -60,15 +60,19 @@ namespace HelloWorldWeb.Tests
         public void UpdateMemberName()
         {
             // Assume
+            //var teamService = new TeamService(GetMockedMessageHub().Object);
             Mock<IBroadcastService> broadcastServiceMock = new Mock<IBroadcastService>();
             var broadcastService = broadcastServiceMock.Object;
             var teamService = new TeamService(broadcastService);
+
             var id = teamService.GetTeamInfo().TeamMembers[0].Id;
+
             // Act
             teamService.UpdateMemberName(id, "UnitTest");
 
             // Assert
-            Assert.Equal("UnitTest", teamService.GetTeamMemberById(id).Name);
+            var member = teamService.GetTeamMemberById(id);
+            Assert.Equal("UnitTest", member.Name);
         }
 
         [Fact]
@@ -98,7 +102,7 @@ namespace HelloWorldWeb.Tests
             //Assume
             InitializeTimeServiceMock();
             var timeService = timeMock.Object;
-            var newTeamMember = new TeamMember("Intern", timeService);
+            var newTeamMember = new TeamMember();
             newTeamMember.Birthdate = new DateTime(1990, 09,30);           
             //Act
             int age = newTeamMember.GetAge();
