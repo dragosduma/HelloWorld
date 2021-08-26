@@ -73,6 +73,8 @@ namespace HelloWorldWebApp
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
+
+            this.AssignRoleProgramatically(services.BuildServiceProvider());
         }
 
         /// <summary>
@@ -114,6 +116,13 @@ namespace HelloWorldWebApp
                 endpoints.MapHub<MessageHub>("/messagehub");
                 endpoints.MapRazorPages();
             });
+        }
+
+        private async void AssignRoleProgramatically(IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+            var user = await userManager.FindByNameAsync("dragos.duma@gmail.com");
+            await userManager.AddToRoleAsync(user, "Administrators");
         }
     }
 }

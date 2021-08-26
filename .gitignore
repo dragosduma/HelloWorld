@@ -457,3 +457,4 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 *.log
 *.xml
+/Recovery codes authenticator.txt
