@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 
 namespace HelloWorldWeb.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
