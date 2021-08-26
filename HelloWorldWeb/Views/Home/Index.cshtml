@@ -1,4 +1,7 @@
-﻿@model TeamInfo
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model TeamInfo
 
 @{
     ViewData["Title"] = "Home Page";
@@ -6,7 +9,7 @@
 
 @section scripts {
     <script src="~/lib/microsoft-signalr/signalr.js"></script>
-    <script type="text/javascript" src="~/js/Index.js"></script>   
+    <script type="text/javascript" src="~/js/Index.js"></script>
 }
 
 @section AdditionalStyles {
@@ -50,14 +53,20 @@
         @for (var i = 0; i < Model.TeamMembers.Count; i++)
         {
             var member = Model.TeamMembers[i];
-            <li class="member" member-id="@member.Id">
-                <span class="name">@member.Name</span>
+        <li class="member" member-id="@member.Id">
+            <span class="name">@member.Name</span>
+            @if (SignInManager.IsSignedIn(User))
+            {
                 <span class="delete fa fa-remove" onclick="deleteMember(@Model.TeamMembers[i].Id)"></span>
                 <span class="pencil fa fa-pencil"></span>
-            </li>
+            }
+        </li>
         }
     </ul>
-    <input type="text" id="nameField" title="e.g. Radu" />
-    <button class="btn-primary" id="createButton" disabled=disabled title="Create">Create</button>
-    <button class="btn-primary" id="clearButton" title="Clear">Clear</button>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <input type="text" id="nameField" title="e.g. Radu" />
+        <button class="btn-primary" id="createButton" disabled=disabled title="Create">Create</button>
+        <button class="btn-primary" id="clearButton" title="Clear">Clear</button>
+    }
 </div>

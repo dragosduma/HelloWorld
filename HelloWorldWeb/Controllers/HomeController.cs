@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HelloWorldWeb.Models;
 using HelloWorldWeb.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -29,18 +30,21 @@ namespace HelloWorldWeb.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public int AddTeamMember(string name)
         {
             return this.teamService.AddTeamMember(name);
         }
 
         [HttpPost]
+        [Authorize]
         public void UpdateMemberName(int memberId, string name)
         {
             this.teamService.UpdateMemberName(memberId, name);
         }
 
         [HttpDelete]
+        [Authorize]
         public void RemoveMember(int memberIndex)
         {
             this.teamService.RemoveMember(memberIndex);

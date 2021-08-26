@@ -8,7 +8,6 @@ namespace HelloWorldWeb.Services
     public class TeamService : ITeamService
     {
         private readonly TeamInfo teamInfo;
-        private readonly ITimeService timeService;
         private readonly IBroadcastService broadcastService;
 
         public TeamService(IBroadcastService broadcastService)
