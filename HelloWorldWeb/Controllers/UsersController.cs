@@ -26,6 +26,20 @@ namespace HelloWorldWeb.Controllers
             return this.View(await this.userManager.Users.ToListAsync());
         }
 
+        public async Task<IActionResult> AssignAdminRole(string id)
+        {
+            var user = await this.userManager.FindByIdAsync(id);
+            await this.userManager.AddToRoleAsync(user, "Administrators");
+            return this.View("Index", await this.userManager.Users.ToListAsync());
+        }
+
+        public async Task<IActionResult> AssignUsualRole(string id)
+        {
+            var user = await this.userManager.FindByIdAsync(id);
+            await this.userManager.RemoveFromRoleAsync(user, "Administrators");
+            return this.View("Index", await this.userManager.Users.ToListAsync());
+        }
+
     //    // GET: Users/Details/5
     //    public async Task<IActionResult> Details(int? id)
     //    {
