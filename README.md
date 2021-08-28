@@ -14,9 +14,11 @@ heroku container:login
 
 Push container
 ```
-heroku container:push -a name web
+heroku container:push -a app-dragos web
 ```
 
 Release the container
 ```
-heroku container:release -a name web
+heroku container:release -a app-dragos web
+
+Link to application : http://app-dragos.herokuapp.com
